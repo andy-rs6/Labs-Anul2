@@ -43,6 +43,7 @@ def insertionSort(arr):
             arr[j + 1] = arr[j]
             j -= 1
         arr[j + 1] = key
+    return arr
 
 
 # Quick Sort
@@ -87,28 +88,28 @@ def mergeSort(arr):
 #Calculate the time for each function
 def calc_quicksort_time(array):
     start_time = time.time()
-    quickSort(array)
+    quickSort(array.copy())
     end_time = time.time()
 
     return end_time - start_time
 
 def calc_mergesort_times(array):
     start_time = time.time()
-    mergeSort(array)
+    mergeSort(array.copy())
     end_time = time.time()
 
     return end_time - start_time
 
 def calc_heapSort_time(array):
     start_time = time.time()
-    heapSort(array)
+    heapSort(array.copy())
     end_time = time.time()
 
     return end_time - start_time
 
 def calc_insertionSort_time(array):
     start_time = time.time()
-    insertionSort(array)
+    insertionSort(array.copy())
     end_time = time.time()
 
     return end_time - start_time
@@ -120,8 +121,9 @@ insertion = []
 
 
 # Generate random arrays to sort
-arr = [10, 100, 1000, 10000, 100000, 500000, 1000000]
+arr = [10, 100,1000,2000, 5000, 10000]
 arrays = {}
+
 
 for size in arr:
     arrays[size] = [random.randint(1, size) for x in range(size)]
@@ -131,11 +133,19 @@ for size in arr:
     heap.append(calc_heapSort_time(arrays[size]))
     insertion.append(calc_insertionSort_time(arrays[size]))
 
+algorithms = ["Heap sort","Insertion sort", "Merges ort", "Quick sort" ]
+time = [heap[-1], insertion[-1], merge[-1], quick[-1]]
+plt.bar(algorithms, time, label="Heapsort", )
+plt.legend()
+plt.xlabel("Algorithms ")
+plt.ylabel("Runtime (Seconds)")
+plt.show()
+
 plt.plot(arr, heap, label="Heapsort")
 plt.plot(arr, insertion, label="insertionsort")
 plt.plot(arr, merge, label="Mergesort")
 plt.plot(arr, quick, label="Quicksort")
-
+#
 plt.legend()
 plt.xlabel("Array Size")
 plt.ylabel("Runtime (Seconds)")
