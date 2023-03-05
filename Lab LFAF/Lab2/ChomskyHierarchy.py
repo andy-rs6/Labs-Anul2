@@ -1,20 +1,14 @@
 class ChomskyHierarchy:
-    def __init__(self):
-        self.states = {'q0', 'q1', 'q2', 'q3', 'q4'}
-        self.alphabet = {'a', 'b'}
-        self.accept_states = {'q3'}
-        self.start_state = 'q0'
-        self.transitions = {
-            ('q0', 'a'): {'q1'},
-            ('q1', 'b'): {'q2'},
-            ('q2', 'b'): {'q0'},
-            ('q3', 'a'): {'q4'},
-            ('q4', 'a'): {'q0'},
-            ('q2', 'a'): {'q3'},
-            ('q1', 'b'): {'q1'}
-        }
+    #initiate the constructor to set the parameters
+    def __init__(self, states, alphabet, F, q0, transitions):
+        self.states = states
+        self.alphabet = alphabet
+        self.F = F
+        self.q0 = q0
+        self.transitions = transitions
 
-    def is_deterministic(self):
+    #Determine whether your FA is deterministic or non-deterministic
+    def check_deterministic(self):
         for state in self.states:
             for symbol in self.alphabet:
                 next_states = self.transitions.get((state, symbol), set())
@@ -22,19 +16,20 @@ class ChomskyHierarchy:
                     return False
         return True
 
-    def to_dfa(self):
-        if self.is_deterministic():
+    #Implement some functionality that would convert an NDFA to a DFA
+    def NDFA_to_a_DFA(self):
+        if self.check_deterministic():
             return self
 
         dfa_states = set()
-        dfa_accept_states = set()
+        dfa_F = set()
         dfa_transitions = dict()
-        state_queue = [frozenset([self.start_state])]
+        state_queue = [frozenset([self.q0])]
         while state_queue:
             current_states = state_queue.pop(0)
             dfa_states.add(current_states)
-            if any(state in self.accept_states for state in current_states):
-                dfa_accept_states.add(current_states)
+            if any(state in self.F for state in current_states):
+                dfa_F.add(current_states)
             for symbol in self.alphabet:
                 next_states = set()
                 for state in current_states:
@@ -45,42 +40,44 @@ class ChomskyHierarchy:
                     if next_states not in dfa_states:
                         state_queue.append(next_states)
 
-        dfa = ChomskyHierarchy()
+        dfa = ChomskyHierarchy(self, self.alphabet, self.F, self.q0, self.transitions)
         dfa.states = dfa_states
-        dfa.accept_states = dfa_accept_states
+        dfa.F = dfa_F
         dfa.transitions = dfa_transitions
+
         return dfa
 
-    def to_grammar(self):
-        productions = dict()
+    # Implement conversion of a finite automaton to a regular grammar.
+    def finite_to_grammar(self):
+        product = dict()
         for state in self.states:
             for symbol in self.alphabet:
                 next_states = self.transitions.get((state, symbol), set())
                 for next_state in next_states:
-                    if next_state in self.accept_states:
-                        if state not in productions:
-                            productions[state] = set()
-                        productions[state].add(symbol)
+                    if next_state in self.F:
+                        if state not in product:
+                            product[state] = set()
+                        product[state].add(symbol)
                     else:
-                        if next_state not in productions:
-                            productions[next_state] = set()
-                        productions[next_state].add(symbol + state)
-        start_symbol = self.start_state
-        if start_symbol in productions:
-            productions['S'] = productions[start_symbol]
-            del productions[start_symbol]
+                        if next_state not in product:
+                            product[next_state] = set()
+                        product[next_state].add(symbol + state)
+        start_symbol = self.q0
+        if start_symbol in product:
+            product['S'] = product[start_symbol]
+            del product[start_symbol]
             for state in self.states:
                 for symbol in self.alphabet:
                     next_states = self.transitions.get((state, symbol), set())
                     for next_state in next_states:
-                        if state in productions and symbol + state in productions[state]:
-                            if next_state not in productions:
-                                productions[next_state] = set()
-                            productions[next_state].add(symbol + 'S')
+                        if state in product and symbol + state in product[state]:
+                            if next_state not in product:
+                                product[next_state] = set()
+                            product[next_state].add(symbol + 'S')
         else:
             start_symbol = 'S'
-            productions[start_symbol] = set()
-            for accept_state in self.accept_states:
-                productions[start_symbol].add('eps' + accept_state)
+            product[start_symbol] = set()
+            for FF in self.F:
+                product[start_symbol].add('eps' + FF)
 
-        return start_symbol, productions
+        return start_symbol, product
