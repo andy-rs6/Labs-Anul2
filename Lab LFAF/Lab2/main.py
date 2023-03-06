@@ -32,6 +32,15 @@ word_5 = grammar.generate_string()
 # print("word_4 = {x} ".format(x = word_4) + " | " + str(finite_automaton.check_string(word_4)))
 # print("word_5 = {x} ".format(x = word_5) + " | " + str(finite_automaton.check_string(word_5)))
 
+#Lab 2 -----------------------------------------------------------------------------------------------------
+#Clasify grammar for Lab1
+#grammar = Grammar.Grammar(VN, VT, P)
+# classify the grammar based on Chomsky hierarchy
+get_classify = grammar.check_Grammar(P)
+
+print(f"Grammar clasification LAB1 :  {get_classify}")
+
+
 
 states = ['q0', 'q1', 'q2', 'q3', 'q4']
 alphabet = ['a', 'b']

@@ -52,3 +52,57 @@ class Grammar:
 
         # Call the constructor of Finite Automaton with all the params
         return FiniteAutomaton.FiniteAutomaton(Q, Sigma, arr, q0, F)
+
+    def check_Grammar(self, P):
+        if self.check_Context_free(P):
+            return "Type context free"
+        if self.check_Context_sensitive(P):
+            return "Type context sensitive"
+
+        if self.check_Regular(P):
+            return "Type regular"
+
+        if self.check_Unrestricted(P):
+            return "Type unrestricted"
+
+        return "Not in Chomsky Hierarchy"
+
+    def check_Context_sensitive(self, P):
+
+        for symbol, string in P.items():
+            for rhs in string:
+                if len(rhs) < len(symbol):
+                    return False
+                for i, symbol in enumerate(rhs):
+                    if symbol in P and i != len(rhs) - 1:
+                        if len(rhs) <= len(symbol):
+                            return False
+        return True
+
+    def check_Context_free(self, P):
+
+        for symbol, string in P.items():
+            if len(symbol) != 1 or not symbol.isupper():
+                return False
+            for rhs in string:
+                for symbol in rhs:
+                    if symbol not in P and not symbol.islower():
+                        return False
+        return True
+
+    def check_Regular(self, P):
+
+        for symbol, string in P.items():
+            if not symbol.isupper():
+                return False
+            for rhs in string:
+                if len(rhs) == 1 and rhs.islower():
+                    continue
+                elif len(rhs) == 2 and rhs[0].islower() and rhs[1].isupper():
+                    continue
+                else:
+                    return False
+        return True
+
+    def check_Unrestricted(self, P):
+        return True
