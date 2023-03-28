@@ -22,7 +22,7 @@
 - Implement a sample lexer and show how it works.
 
 ## Implementation description
-### get_tokens
+### get_tokens()
 &ensp;&ensp;&ensp; This implementation defines multiple regular expressions for matching numbers, left and right parentheses, and the addition, subtraction, multiplication, negation, ratio and division operators. The get_tokens function takes in a string of input code and repeatedly matches the next token based on the regex patterns. When a token is found, it is added to the list of tokens along with its token type The function returns the list of tokens.
 
 ```python
@@ -56,7 +56,7 @@
 ```
 
 ## Results
-![Alt text](screenshots/lab2.png)
+![Alt text](screenshots/lab3.png)
 ## Conclusions
 &ensp;&ensp;&ensp; After doing this laboratory work,i understand that a lexer performs lexical analysis, turning text into tokens. Is uses regular expressions to convert each syntactical element from the input into a token, essentially mapping the input to a stream of tokens. A parser reads in a stream of tokens and attempts to match tokens to a set of rules, where the end result maps the token stream to an abstract syntax tree. 
 
