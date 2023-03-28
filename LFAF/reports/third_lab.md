@@ -1,4 +1,4 @@
-# Determinism in Finite Automata. Conversion from NFA to DFA. Chomsky Hierarchy.
+# Topic: Lexer & Scanner
 ## Course: Formal Languages & Finite Automata
 ## Author: Andrei Ceban FAF-211
 Variant 8
