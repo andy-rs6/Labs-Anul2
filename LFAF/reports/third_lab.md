@@ -1,49 +1,17 @@
 # Topic: Lexer & Scanner
 ## Course: Formal Languages & Finite Automata
 ## Author: Andrei Ceban FAF-211
-Variant 8
-
-Q = {q0,q1,q2,q3,q4},
-
-∑ = {a,b},
-
-F = {q3},
-
-δ(q0,a) = q1,
-
-δ(q1,b) = q2,
-
-δ(q2,b) = q0,
-
-δ(q3,a) = q4,
-
-δ(q4,a) = q0,
-
-δ(q2,a) = q3,
-
-δ(q1,b) = q1.
-
 
 ## Theory
-A finite automaton is a mechanism used to represent processes of different kinds. It can be compared
-to a state machine as they both have similar structures and purpose as well. The word finite signifies the
-fact that an automaton comes with a starting and a set of final states. In other words, for process modeled
-by an automaton has a beginning and an ending.
+&ensp;&ensp;&ensp; Lexer and scanner are terms that are often used interchangeably in the field of computer science, but they refer to slightly different concepts. In general, a lexer (short for lexical analyzer) is a program that takes a stream of characters as input and breaks it up into a series of tokens, which are the basic building blocks of a programming language.
 
-Based on the structure of an automaton, there are cases in which with one transition multiple states
-can be reached which causes non determinism to appear. In general, when talking about systems theory the
-word determinism characterizes how predictable a system is. If there are random variables involved, the
-system becomes stochastic or non deterministic.
+&ensp;&ensp;&ensp; The scanner is a component of the lexer that reads the input stream of characters and identifies the individual tokens. In some cases, the scanner and lexer may be separate programs or components of a larger program, but they are typically closely related and work together to parse the input.
 
-That being said, the automata can be classified as non-/deterministic, and there is in fact a possibility
-to reach determinism by following algorithms which modify the structure of the automaton.
-The process of converting a non-deterministic finite automaton (NFA) to a deterministic finite automaton (DFA) is known as the subset construction method. The idea is to construct a DFA whose states represent sets of states of the NFA, where the DFA’s transitions are determined by the transitions of the
-NFA.
+&ensp;&ensp;&ensp; The process of tokenizing involves breaking up the input stream into distinct pieces that represent the various elements of a programming language, such as keywords, operators, identifiers, and literals. These tokens are then passed on to the next stage of the parsing process, where they are analyzed and interpreted.
 
-Determinism is an important concept in the theory of finite automata. A deterministic finite automaton (DFA) is a mathematical model used to recognize regular languages. It consists of a finite set of states, a finite set of input symbols (the alphabet), a transition function that maps each state and input symbol to a unique next state, a start state, and a set of accepting states.
+&ensp;&ensp;&ensp; The lexer and scanner are critical components of any compiler or interpreter for a programming language. They play a key role in parsing the input code and generating an abstract syntax tree (AST) that can be used by the compiler or interpreter to generate executable code.
 
-The key property of a DFA is that for each input string, there is exactly one possible sequence of state transitions that the DFA can make. This means that the behavior of a DFA is completely determined by its current state and the input symbol it receives.
-
+&ensp;&ensp;&ensp; The lexer and scannerare fundamental components of the parsing process in a programming language. The lexer takes an input stream of characters and breaks it up into a series of tokens, while the scanner is responsible for identifying the individual tokens in the input stream. Together, they provide the foundation for the compilation or interpretation of a programming language.
 
 ## Objectives:
 
