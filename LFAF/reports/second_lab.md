@@ -115,8 +115,7 @@ def NDFA_to_a_DFA(self):
 return dfa
 ```
 
-### check_Regular, check_Context_free, check_Context_sensitive
-
+### isRegularGrammar
 - The isRegularGrammar() method checks if the right-hand side of every production consists of either a single lowercase letter or two symbols where the first symbol is uppercase and the second is lowercase. If all productions satisfy this condition, then the grammar is regular.
 
 
@@ -135,6 +134,7 @@ def check_Context_sensitive(self, P):
 
 
 ```
+### isContextFreeGrammar
 - The isContextFreeGrammar() method checks if the left-hand side of every production is a single uppercase letter and the right-hand side consists of either uppercase or lowercase letters. If all productions satisfy this condition, then the grammar is context-free.
 
 
@@ -151,7 +151,7 @@ def check_Context_free(self, P):
     return True
 ```
 
-
+### isContextSensitiveGrammar
 - The isContextSensitiveGrammar() method checks if the length of the left-hand side of every production is less than or equal to the length of the right-hand side. If all productions satisfy this condition, then the grammar is context-sensitive.
 
 ```
