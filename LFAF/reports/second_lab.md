@@ -71,95 +71,103 @@ The key property of a DFA is that for each input string, there is exactly one po
 &ensp;&ensp;&ensp; This code checks whether the finite automaton represented by the object is deterministic or not. It does so by creating a transition map that maps the current state and input symbol to a set of next states. If any state in the automaton has multiple transitions for the same input symbol, then the automaton is non-deterministic and the method returns false. Otherwise, the automaton is deterministic and the method returns true. The method takes no arguments and returns a boolean value.
 
 ```
-    def check_deterministic(self):
-        for state in self.states:
-            for symbol in self.alphabet:
-                next_states = self.transitions.get((state, symbol), set())
-                if len(next_states) != 1:
-                    return False
-        return True
+def check_deterministic(self):
+    for state in self.states:
+        for symbol in self.alphabet:
+            next_states = self.transitions.get((state, symbol), set())
+            if len(next_states) != 1:
+                return False
+    return True
 ```
 ### NDFA_to_a_DFA
 &ensp;&ensp;&ensp; This code converts a non-deterministic finite automaton NFA to a deterministic finite automaton DFA. It does so by creating a power set of all possible states of the NFA, creating a new DFA transition table, and then using the transition table to create the DFA.
 The method creates a power set of all possible states of the NFA by calling the "getPowerSet" method, which returns a set of sets representing all possible combinations of states. The method then creates a new DFA transition table by iterating over all state sets in the power set and creating a set of next states for each symbol in the alphabet by examining the possible transitions from each state in the current state set for each input symbol. Finally, the method creates a new DFA by initializing the new DFA with the transition table, final states, and initial state.
 
 ```
-        def NDFA_to_a_DFA(self):
-        if self.check_deterministic():
-            return self
+def NDFA_to_a_DFA(self):
+    if self.check_deterministic():
+        return self
 
-        dfa_states = set()
-        dfa_F = set()
-        dfa_transitions = dict()
-        state_queue = [frozenset([self.q0])]
-        while state_queue:
-            current_states = state_queue.pop(0)
-            dfa_states.add(current_states)
-            if any(state in self.F for state in current_states):
-                dfa_F.add(current_states)
-            for symbol in self.alphabet:
-                next_states = set()
-                for state in current_states:
-                    next_states |= set(self.transitions.get((state, symbol), set()))
-                if next_states:
-                    next_states = frozenset(next_states)
-                    dfa_transitions[(current_states, symbol)] = next_states
-                    if next_states not in dfa_states:
-                        state_queue.append(next_states)
+    dfa_states = set()
+    dfa_F = set()
+    dfa_transitions = dict()
+    state_queue = [frozenset([self.q0])]
+    while state_queue:
+        current_states = state_queue.pop(0)
+        dfa_states.add(current_states)
+        if any(state in self.F for state in current_states):
+            dfa_F.add(current_states)
+        for symbol in self.alphabet:
+            next_states = set()
+            for state in current_states:
+                next_states |= set(self.transitions.get((state, symbol), set()))
+            if next_states:
+                next_states = frozenset(next_states)
+                dfa_transitions[(current_states, symbol)] = next_states
+                if next_states not in dfa_states:
+                    state_queue.append(next_states)
 
-        dfa = ChomskyHierarchy(self, self.alphabet, self.F, self.q0, self.transitions)
-        dfa.states = dfa_states
-        dfa.F = dfa_F
-        dfa.transitions = dfa_transitions
+    dfa = ChomskyHierarchy(self, self.alphabet, self.F, self.q0, self.transitions)
+    dfa.states = dfa_states
+    dfa.F = dfa_F
+    dfa.transitions = dfa_transitions
 
-        return dfa
+return dfa
 ```
 
 ### check_Regular, check_Context_free, check_Context_sensitive
 
 - The isRegularGrammar() method checks if the right-hand side of every production consists of either a single lowercase letter or two symbols where the first symbol is uppercase and the second is lowercase. If all productions satisfy this condition, then the grammar is regular.
 
+
+```
+def check_Context_sensitive(self, P):
+
+    for symbol, string in P.items():
+        for rhs in string:
+            if len(rhs) < len(symbol):
+                return False
+            for i, symbol in enumerate(rhs):
+                if symbol in P and i != len(rhs) - 1:
+                    if len(rhs) <= len(symbol):
+                        return False
+    return True
+
+
+```
 - The isContextFreeGrammar() method checks if the left-hand side of every production is a single uppercase letter and the right-hand side consists of either uppercase or lowercase letters. If all productions satisfy this condition, then the grammar is context-free.
+
+
+```
+def check_Context_free(self, P):
+
+    for symbol, string in P.items():
+        if len(symbol) != 1 or not symbol.isupper():
+            return False
+        for rhs in string:
+            for symbol in rhs:
+                if symbol not in P and not symbol.islower():
+                    return False
+    return True
+```
+
 
 - The isContextSensitiveGrammar() method checks if the length of the left-hand side of every production is less than or equal to the length of the right-hand side. If all productions satisfy this condition, then the grammar is context-sensitive.
 
 ```
-    def check_Context_sensitive(self, P):
+def check_Regular(self, P):
 
-        for symbol, string in P.items():
-            for rhs in string:
-                if len(rhs) < len(symbol):
-                    return False
-                for i, symbol in enumerate(rhs):
-                    if symbol in P and i != len(rhs) - 1:
-                        if len(rhs) <= len(symbol):
-                            return False
-        return True
-
-    def check_Context_free(self, P):
-
-        for symbol, string in P.items():
-            if len(symbol) != 1 or not symbol.isupper():
+    for symbol, string in P.items():
+        if not symbol.isupper():
+            return False
+        for rhs in string:
+            if len(rhs) == 1 and rhs.islower():
+                continue
+            elif len(rhs) == 2 and rhs[0].islower() and rhs[1].isupper():
+                continue
+            else:
                 return False
-            for rhs in string:
-                for symbol in rhs:
-                    if symbol not in P and not symbol.islower():
-                        return False
-        return True
-
-    def check_Regular(self, P):
-
-        for symbol, string in P.items():
-            if not symbol.isupper():
-                return False
-            for rhs in string:
-                if len(rhs) == 1 and rhs.islower():
-                    continue
-                elif len(rhs) == 2 and rhs[0].islower() and rhs[1].isupper():
-                    continue
-                else:
-                    return False
-        return True
+    return True
 ```
 
 
