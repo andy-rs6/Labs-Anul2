@@ -56,7 +56,8 @@
 ```
 
 ## Results
-![Alt text](screenshots/lab3.png)
+![screenshots/lab3_1.png]
+![Ascreenshots/lab3_1.png]
 ## Conclusions
 &ensp;&ensp;&ensp; After doing this laboratory work,i understand that a lexer performs lexical analysis, turning text into tokens. Is uses regular expressions to convert each syntactical element from the input into a token, essentially mapping the input to a stream of tokens. A parser reads in a stream of tokens and attempts to match tokens to a set of rules, where the end result maps the token stream to an abstract syntax tree. 
 
