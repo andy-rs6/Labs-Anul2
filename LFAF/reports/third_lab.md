@@ -3,9 +3,9 @@
 ## Author: Andrei Ceban FAF-211
 
 ## Theory
-&ensp;&ensp;&ensp; Lexer and scanner are terms that are often used interchangeably in the field of computer science, but they refer to slightly different concepts. In general, a lexer (short for lexical analyzer) is a program that takes a stream of characters as input and breaks it up into a series of tokens, which are the basic building blocks of a programming language.
+&ensp;&ensp;&ensp; The term lexer comes from lexical analysis which, in turn, represents the process of extracting lexical tokens from a string of characters. There are several alternative names for the mechanism called lexer, for example tokenizer or scanner. The lexical analysis is one of the first stages used in a compiler/interpreter when dealing with programming, markup or other types of languages.     
 
-&ensp;&ensp;&ensp; The scanner is a component of the lexer that reads the input stream of characters and identifies the individual tokens. In some cases, the scanner and lexer may be separate programs or components of a larger program, but they are typically closely related and work together to parse the input.
+&ensp;&ensp;&ensp; The tokens are identified based on some rules of the language and the products that the lexer gives are called lexemes. So basically the lexer is a stream of lexemes. Now in case it is not clear what's the difference between lexemes and tokens, there is a big one. The lexeme is just the byproduct of splitting based on delimiters, for example spaces, but the tokens give names or categories to each lexeme. So the tokens don't retain necessarily the actual value of the lexeme, but rather the type of it and maybe some metadata.
 
 &ensp;&ensp;&ensp; The process of tokenizing involves breaking up the input stream into distinct pieces that represent the various elements of a programming language, such as keywords, operators, identifiers, and literals. These tokens are then passed on to the next stage of the parsing process, where they are analyzed and interpreted.
 
@@ -22,8 +22,8 @@
 - Implement a sample lexer and show how it works.
 
 ## Implementation description
-### check_deterministic
-&ensp;&ensp;&ensp; This code checks whether the finite automaton represented by the object is deterministic or not. It does so by creating a transition map that maps the current state and input symbol to a set of next states. If any state in the automaton has multiple transitions for the same input symbol, then the automaton is non-deterministic and the method returns false. Otherwise, the automaton is deterministic and the method returns true. The method takes no arguments and returns a boolean value.
+### get_tokens
+&ensp;&ensp;&ensp; This implementation defines multiple regular expressions for matching numbers, left and right parentheses, and the addition, subtraction, multiplication, negation, ratio and division operators. The get_tokens function takes in a string of input code and repeatedly matches the next token based on the regex patterns. When a token is found, it is added to the list of tokens along with its token type The function returns the list of tokens.
 
 ```python
     def get_tokens(self):
@@ -54,22 +54,11 @@
                 position = match.end()
         return tokens
 ```
-This implementation defines seven regular expressions for matching numbers, left and right parentheses, and the addition, subtraction, multiplication, and division operators. The tokenize function takes in a string of input code and repeatedly matches the next token based on the regex patterns. When a token is found, it is added to the list of tokens along with its token type (e.g. NUMBER) and its value (e.g. 42). The function returns the list of tokens.
-
 
 ## Results
 ![Alt text](screenshots/lab2.png)
 ## Conclusions
-&ensp;&ensp;&ensp; After doing this laboratory work,i understand that determinism in finite automata is an important
-concept in computer science that refers to the ability of a machine to uniquely determine its next state
-based on the current input and state. Deterministic finite automata (DFA) are particularly useful for pattern
-recognition and language processing tasks, as they can efficiently recognize regular languages.
+&ensp;&ensp;&ensp; After doing this laboratory work,i understand that a lexer performs lexical analysis, turning text into tokens. Is uses regular expressions to convert each syntactical element from the input into a token, essentially mapping the input to a stream of tokens. A parser reads in a stream of tokens and attempts to match tokens to a set of rules, where the end result maps the token stream to an abstract syntax tree. 
+&ensp;&ensp;&ensp; Also i understand that the  lexical analyzer is responsible for removing the white spaces and comments from the source program. It corresponds to the error messages with the source program. It helps to identify the tokens. The input characters are read by the lexical analyzer from the source code.
 
-The process of converting a non-deterministic finite automaton (NDFA) to a DFA involves transforming the NDFA into a deterministic version of itself, where each input symbol leads to exactly one next state. This conversion is important for simplifying the machine and making it easier to analyze and
-understand.
-
-Also, using the Chomsky hierarchy which is a classification of formal languages into four categories
-based on their complexity and the types of grammars that can generate them. These categories include regular languages, context-free languages, context-sensitive languages, and recursively enumerable languages.
-Each category has its own set of rules and limitations, and understanding these categories can help in the
-design and analysis of computational systems.
 
