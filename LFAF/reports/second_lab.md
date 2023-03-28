@@ -68,7 +68,7 @@ The key property of a DFA is that for each input string, there is exactly one po
 
 ## Implementation description
 ### check_deterministic
-This code checks whether the finite automaton represented by the object is deterministic or not. It does so by creating a transition map that maps the current state and input symbol to a set of next states. If any state in the automaton has multiple transitions for the same input symbol, then the automaton is non-deterministic and the method returns false. Otherwise, the automaton is deterministic and the method returns true. The method takes no arguments and returns a boolean value.
+&ensp;&ensp;&ensp; This code checks whether the finite automaton represented by the object is deterministic or not. It does so by creating a transition map that maps the current state and input symbol to a set of next states. If any state in the automaton has multiple transitions for the same input symbol, then the automaton is non-deterministic and the method returns false. Otherwise, the automaton is deterministic and the method returns true. The method takes no arguments and returns a boolean value.
 
 ```
     def check_deterministic(self):
@@ -80,7 +80,7 @@ This code checks whether the finite automaton represented by the object is deter
         return True
 ```
 ### NDFA_to_a_DFA
-This code converts a non-deterministic finite automaton NFA to a deterministic finite automaton DFA. It does so by creating a power set of all possible states of the NFA, creating a new DFA transition table, and then using the transition table to create the DFA.
+&ensp;&ensp;&ensp; This code converts a non-deterministic finite automaton NFA to a deterministic finite automaton DFA. It does so by creating a power set of all possible states of the NFA, creating a new DFA transition table, and then using the transition table to create the DFA.
 The method creates a power set of all possible states of the NFA by calling the "getPowerSet" method, which returns a set of sets representing all possible combinations of states. The method then creates a new DFA transition table by iterating over all state sets in the power set and creating a set of next states for each symbol in the alphabet by examining the possible transitions from each state in the current state set for each input symbol. Finally, the method creates a new DFA by initializing the new DFA with the transition table, final states, and initial state.
 
 ```
@@ -167,7 +167,7 @@ The method creates a power set of all possible states of the NFA by calling the 
 ## Results
 ![Alt text](screenshots/lab2.png)
 ## Conclusions
-After doing this laboratory work,i understand that determinism in finite automata is an important
+&ensp;&ensp;&ensp; After doing this laboratory work,i understand that determinism in finite automata is an important
 concept in computer science that refers to the ability of a machine to uniquely determine its next state
 based on the current input and state. Deterministic finite automata (DFA) are particularly useful for pattern
 recognition and language processing tasks, as they can efficiently recognize regular languages.
