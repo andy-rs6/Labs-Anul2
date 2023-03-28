@@ -59,6 +59,7 @@
 ![Alt text](screenshots/lab2.png)
 ## Conclusions
 &ensp;&ensp;&ensp; After doing this laboratory work,i understand that a lexer performs lexical analysis, turning text into tokens. Is uses regular expressions to convert each syntactical element from the input into a token, essentially mapping the input to a stream of tokens. A parser reads in a stream of tokens and attempts to match tokens to a set of rules, where the end result maps the token stream to an abstract syntax tree. 
+
 &ensp;&ensp;&ensp; Also i understand that the  lexical analyzer is responsible for removing the white spaces and comments from the source program. It corresponds to the error messages with the source program. It helps to identify the tokens. The input characters are read by the lexical analyzer from the source code.
 
 
