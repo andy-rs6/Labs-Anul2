@@ -1,5 +1,5 @@
-import Grammar
-import ChomskyHierarchy
+from grammar import Grammar
+from automaton import ChomskyHierarchy
 
 # Varianta 8
 

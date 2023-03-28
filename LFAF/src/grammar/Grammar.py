@@ -1,4 +1,4 @@
-import FiniteAutomaton
+from import FiniteAutomaton
 import random
 
 class Grammar:
