@@ -30,6 +30,15 @@ Step 4 − Replace each production A → B1…Bn where n > 2 with A → B1C wher
 
 Step 5 − If the right side of any production is in the form A → aB where a is a terminal and A, B are non-terminal, then the production is replaced by A → XB and X → a. Repeat this step for every production which is in the form A → aB.
 
+
+&ensp;&ensp;&ensp; Normalizing a grammar is the process of converting it into a standard form or normal form, which can make it easier to analyze and manipulate the grammar. There are different types of normal forms depending on the type of grammar being used. Normalizing a grammar can be useful for several reasons, such as simplifying the grammar, making it easier to generate or parse sentences in the language, and for theoretical analysis of the grammar's properties.
+
+&ensp;&ensp;&ensp; Chomsky Normal Form (CNF) is a normal form for context-free grammars, as explained in the previous answer. Another normal form for context-free grammars is Greibach Normal Form (GNF), where each production rule is of the form:
+
+A → aB1B2...Bk
+
+where A is a nonterminal symbol, a is a terminal symbol, and B1, B2, ..., Bk are nonterminal symbols. In other words, the right-hand side of each production rule starts with a single terminal symbol followed by any number of nonterminal symbols.
+
 ## Objectives:
 1. Learn about Chomsky Normal Form (CNF) [1].
 2. Get familiar with the approaches of normalizing a grammar.
