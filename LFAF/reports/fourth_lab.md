@@ -19,6 +19,17 @@ where A, B, and C are nonterminal symbols (symbols that can be replaced by a seq
 
 &ensp;&ensp;&ensp; The grammar G1 is in CNF as production rules satisfy the rules specified for CNF. However, the grammar G2 is not in CNF as the production rule S->aZ contains terminal followed by non-terminal which does not satisfy the rules specified for CNF.
 
+&ensp;&ensp;&ensp; Algorithm to Convert into Chomsky Normal Form  : 
+Step 1 − If the start symbol S occurs on some right side, create a new start symbol S’ and a new production S’→ S.
+
+Step 2 − Remove Null productions. (Using the Null production removal algorithm discussed earlier)
+
+Step 3 − Remove unit productions. (Using the Unit production removal algorithm discussed earlier)
+
+Step 4 − Replace each production A → B1…Bn where n > 2 with A → B1C where C → B2 …Bn. Repeat this step for all productions having two or more symbols in the right side.
+
+Step 5 − If the right side of any production is in the form A → aB where a is a terminal and A, B are non-terminal, then the production is replaced by A → XB and X → a. Repeat this step for every production which is in the form A → aB.
+
 ## Objectives:
 1. Learn about Chomsky Normal Form (CNF) [1].
 2. Get familiar with the approaches of normalizing a grammar.
@@ -27,6 +38,7 @@ where A, B, and C are nonterminal symbols (symbols that can be replaced by a seq
     2. The implemented functionality needs executed and tested.
     3. A BONUS point will be given for the student who will have unit tests that validate the functionality of the project.
     4. Also, another BONUS point would be given if the student will make the aforementioned function to accept any grammar, not only the one from the student's variant.
+
 
 
 ## Implementation description
