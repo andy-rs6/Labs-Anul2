@@ -1,4 +1,4 @@
-class ChomskyHierarchy:
+class NFA_DFA:
     #initiate the constructor to set the parameters
     def __init__(self, states, alphabet, F, q0, transitions):
         self.states = states

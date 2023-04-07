@@ -1,17 +1,17 @@
 # from grammar import Grammar
-# from automaton import ChomskyHierarchy
+# from automaton import NFA_DFA
 from lexer import lexer as getLexer
 
-# Varianta 8
 
+#Lab 1 -----------------------------------------------------------------------------------------------------
 # Set of terminal symbols
-VT = {'a', 'b', 'c', 'd', 'e'}
+# VT = {'a', 'b', 'c', 'd', 'e'}
 
 # Set of non-terminal symbols
-VN = {'S', 'D', 'E', 'J'}
+# VN = {'S', 'D', 'E', 'J'}
 
 # Set of productions, rules or transitions
-P = {"S": ["aD"],"D": ["dE", "bJ", "aE"],"J": ["cS"],"E": ["eX", "aE"],"X": " " }
+# P = {"S": ["aD"],"D": ["dE", "bJ", "aE"],"J": ["cS"],"E": ["eX", "aE"],"X": " " }
 
 # Initiate the grammar calling the constructor with all 3 params
 # grammar = Grammar.Grammar(VN, VT, P)
@@ -33,6 +33,7 @@ P = {"S": ["aD"],"D": ["dE", "bJ", "aE"],"J": ["cS"],"E": ["eX", "aE"],"X": " " 
 # print("word_4 = {x} ".format(x = word_4) + " | " + str(finite_automaton.check_string(word_4)))
 # print("word_5 = {x} ".format(x = word_5) + " | " + str(finite_automaton.check_string(word_5)))
 
+
 #Lab 2 -----------------------------------------------------------------------------------------------------
 #Clasify grammar for Lab1
 #grammar = Grammar.Grammar(VN, VT, P)
@@ -41,22 +42,19 @@ P = {"S": ["aD"],"D": ["dE", "bJ", "aE"],"J": ["cS"],"E": ["eX", "aE"],"X": " " 
 
 # print(f"Grammar clasification LAB1 :  {get_classify}")
 
-
-
-states = ['q0', 'q1', 'q2', 'q3', 'q4']
-alphabet = ['a', 'b']
-F = ['q3']
-start_state = 'q0'
-transitions =  {('q0', 'a'): {'q1'},
-                ('q1', 'b'): {'q1','q2'},
-                ('q2', 'b'): {'q0'},
-                ('q3', 'a'): {'q4'},
-                ('q4', 'a'): {'q0'},
-                ('q2', 'a'): {'q3'},}
-
+# states = ['q0', 'q1', 'q2', 'q3', 'q4']
+# alphabet = ['a', 'b']
+# F = ['q3']
+# start_state = 'q0'
+# transitions =  {('q0', 'a'): {'q1'},
+#                 ('q1', 'b'): {'q1','q2'},
+#                 ('q2', 'b'): {'q0'},
+#                 ('q3', 'a'): {'q4'},
+#                 ('q4', 'a'): {'q0'},
+#                 ('q2', 'a'): {'q3'},}
 
 # Get the constructor with farams to  check the automation
-# Automation = ChomskyHierarchy.ChomskyHierarchy(states, alphabet, F, start_state, transitions)
+# Automation = NFA_DFA.NFA_DFA(states, alphabet, F, start_state, transitions)
 
 # Check if automaton is deterministic
 # is_deterministic = Automation.check_deterministic()
@@ -73,11 +71,22 @@ transitions =  {('q0', 'a'): {'q1'},
 # grammar = Automation.finite_to_grammar()
 # print(f"Regular grammar productions: {grammar}")
 
+
 #Lab 3 -----------------------------------------------------------------------------------------------------
 
 # Lexer running
 
-input = "(((40 ^ 2) + (80 / 2)  - (18 -5) * 4 ) % 67)"
-lexer = getLexer.Lexer(input)
-print("Token list : ")
-print("The generated tokens are : ",lexer.get_tokens())
+# input = "(((40 ^ 2) + (80 / 2)  - (18 -5) * 4 ) % 67)"
+# lexer = getLexer.Lexer(input)
+# print("Token list : ")
+# print("The generated tokens are : ",lexer.get_tokens())
+
+
+#Lab 4 -----------------------------------------------------------------------------------------------------
+#.....................
+#.............
+
+
+
+
+
