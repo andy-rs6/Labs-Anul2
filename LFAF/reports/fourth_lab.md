@@ -1,25 +1,33 @@
-# Topic: Lexer & Scanner
-## Course: Formal Languages & Finite Automata
-## Author: Andrei Ceban FAF-211
+# Topic: Chomsky Normal Form
+
+### Course: Formal Languages & Finite Automata
+### Author: Andrei Ceban FAF-211
+
+----
 
 ## Theory
-&ensp;&ensp;&ensp; The term lexer comes from lexical analysis which, in turn, represents the process of extracting lexical tokens from a string of characters. There are several alternative names for the mechanism called lexer, for example tokenizer or scanner. The lexical analysis is one of the first stages used in a compiler/interpreter when dealing with programming, markup or other types of languages.     
+&ensp;&ensp;&ensp; Chomsky Normal Form (CNF) is a specific form of a context-free grammar (CFG), which is a set of production rules that define a formal language. In CNF, each production rule is of the form:
+    A → BC or A → a
+where A, B, and C are nonterminal symbols (symbols that can be replaced by a sequence of symbols) and a is a terminal symbol (a symbol that cannot be replaced).   
 
-&ensp;&ensp;&ensp; The tokens are identified based on some rules of the language and the products that the lexer gives are called lexemes. So basically the lexer is a stream of lexemes. Now in case it is not clear what's the difference between lexemes and tokens, there is a big one. The lexeme is just the byproduct of splitting based on delimiters, for example spaces, but the tokens give names or categories to each lexeme. So the tokens don't retain necessarily the actual value of the lexeme, but rather the type of it and maybe some metadata.
+&ensp;&ensp;&ensp; To convert a grammar to Chomsky normal form, a sequence of simple transformations is applied in a certain order; this is described in most textbooks on automata theory. The presentation here follows Hopcroft, Ullman (1979), but is adapted to use the transformation names from Lange. Each of the following transformations establishes one of the properties required for Chomsky normal form.
 
-&ensp;&ensp;&ensp; The process of tokenizing involves breaking up the input stream into distinct pieces that represent the various elements of a programming language, such as keywords, operators, identifiers, and literals. These tokens are then passed on to the next stage of the parsing process, where they are analyzed and interpreted.
+&ensp;&ensp;&ensp; A context free grammar (CFG) is in Chomsky Normal Form (CNF) if all production rules satisfy one of the following conditions:
+- A non-terminal generating a terminal (e.g.; X->x)
+- A non-terminal generating two non-terminals (e.g.; X->YZ)
+- Start symbol generating ε. (e.g.; S-> ε)
 
-&ensp;&ensp;&ensp; The lexer and scanner are critical components of any compiler or interpreter for a programming language. They play a key role in parsing the input code and generating an abstract syntax tree (AST) that can be used by the compiler or interpreter to generate executable code.
-
-&ensp;&ensp;&ensp; The lexer and scannerare fundamental components of the parsing process in a programming language. The lexer takes an input stream of characters and breaks it up into a series of tokens, while the scanner is responsible for identifying the individual tokens in the input stream. Together, they provide the foundation for the compilation or interpretation of a programming language.
+&ensp;&ensp;&ensp; The grammar G1 is in CNF as production rules satisfy the rules specified for CNF. However, the grammar G2 is not in CNF as the production rule S->aZ contains terminal followed by non-terminal which does not satisfy the rules specified for CNF.
 
 ## Objectives:
+1. Learn about Chomsky Normal Form (CNF) [1].
+2. Get familiar with the approaches of normalizing a grammar.
+3. Implement a method for normalizing an input grammar by the rules of CNF.
+    1. The implementation needs to be encapsulated in a method with an appropriate signature (also ideally in an appropriate class/type).
+    2. The implemented functionality needs executed and tested.
+    3. A BONUS point will be given for the student who will have unit tests that validate the functionality of the project.
+    4. Also, another BONUS point would be given if the student will make the aforementioned function to accept any grammar, not only the one from the student's variant.
 
-- Understand what lexical analysis [1] is.
-
-- Get familiar with the inner workings of a lexer/scanner/tokenizer.
-
-- Implement a sample lexer and show how it works.
 
 ## Implementation description
 ### get_tokens()
@@ -64,3 +72,5 @@
 &ensp;&ensp;&ensp; Also i understand that the  lexical analyzer is responsible for removing the white spaces and comments from the source program. It corresponds to the error messages with the source program. It helps to identify the tokens. The input characters are read by the lexical analyzer from the source code.
 
 
+## References:
+[1] [Chomsky Normal Form Wiki](https://en.wikipedia.org/wiki/Chomsky_normal_form)
