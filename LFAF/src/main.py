@@ -1,6 +1,8 @@
-# from grammar import Grammar
-# from automaton import NFA_DFA
+from grammar import Grammar
+from automaton import NFA_DFA
 from lexer import lexer as getLexer
+
+from chomskyform import ChomskyForm
 
 
 #Lab 1 -----------------------------------------------------------------------------------------------------
@@ -83,9 +85,23 @@ from lexer import lexer as getLexer
 
 
 #Lab 4 -----------------------------------------------------------------------------------------------------
-#.....................
-#.............
+# Varianta 8
 
+
+VN = {'S', 'A', 'B', 'C'}
+VT = {'a','d'}
+P = {
+    'S': {'dB', 'A'},
+    'A': {'d', 'dS', 'aAdAB'},
+    'B': {'a', 'aS', 'A', 'ε'},
+    'C': {'Aa'}
+}
+
+ChomskyForm.ChomskyForm(VN, VT, P).chomsky_normal_form()
+
+print("VN : " , VN)
+print("VT : ", VT)
+print("The product is : ", P)
 
 
 

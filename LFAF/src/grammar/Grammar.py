@@ -1,5 +1,5 @@
-import FiniteAutomaton
 import random
+from LFAF.src.automaton import FiniteAutomaton
 
 class Grammar:
     # Constructor of Grammar class
