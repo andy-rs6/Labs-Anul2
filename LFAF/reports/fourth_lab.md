@@ -51,41 +51,111 @@ where A is a nonterminal symbol, a is a terminal symbol, and B1, B2, ..., Bk are
 
 
 ## Implementation description
-### get_tokens()
-&ensp;&ensp;&ensp; This implementation defines multiple regular expressions for matching numbers, left and right parentheses, and the addition, subtraction, multiplication, negation, ratio and division operators. The get_tokens function takes in a string of input code and repeatedly matches the next token based on the regex patterns. When a token is found, it is added to the list of tokens along with its token type The function returns the list of tokens.
+### remove_unit_productions()
+&ensp;&ensp;&ensp; This is a method for removing unit productions from a set of production rules. Unit productions are production rules of the form A -> B, where A and B are non-terminal symbols. The method also removes symbols that are not reachable from the start symbol. It takes the production rules as input and modifies them by removing unit productions and symbols that are not reachable.
 
 ```python
-    def get_tokens(self):
-        tokens = []
-        position = 0
-
-        while position < len(self.input_text):
-            for character, character_type in TOKENS:
-
-                #to compile a regular expression pattern into a regex pattern object
-                regex = re.compile(character)
-
-                # Match the next token based on its regex pattern
-                match = regex.match(self.input_text, position)
-
-                #chech if exist any matches
-                if match:
-                    if character_type:
-                        token = (match.group(), character_type)
-                        print(token)
-                        tokens.append(token)
-                    break # put the element in the list and break to go to the next element
-            if not match:
-                # If we didn't match any token, raise an error
-                raise Exception(f"Invalid token ")
-            else:
-                # If we found a divide operator token, add it to the list and move the position forward
-                position = match.end()
-        return tokens
+def remove_unit_productions(self):
+    # Remove unit productions
+    reachable = {'S'}
+    for symbol in list(self.P):
+        productions = list(self.P[symbol])
+        for production in productions:
+            if len(production) == 1 and production.isupper():
+                self.P[symbol].remove(production)
+                self.P[symbol].update(self.P[production])
+    
+    # Find reachable symbols
+    changed = True
+    while changed:
+        changed = False
+        for nonterm, productions in self.P.items():
+            if nonterm in reachable:
+                for prod in productions:
+                    for symbol in prod:
+                        if symbol in self.VN:
+                            if symbol not in reachable:
+                                reachable.add(symbol)
+                                changed = True
+    
+    # Remove symbols that are not reachable from the start symbol
+    inaccessible = self.VN - reachable
+    for nonterm in inaccessible:
+        del self.P[nonterm]
+        self.VN.remove(nonterm)
 ```
 
+### remove_inaccessible_symbols()
+&ensp;&ensp;&ensp; This function removes any symbols (nonterminals) that are not reachable from the start symbol 'S' in a context-free grammar.
+It starts by finding all reachable symbols and then removes the nonterminals that are not reachable from the start symbol.
+
+```python
+def remove_inaccessible_symbols(self):
+    # Find reachable symbols
+    reachable = {'S'}
+    changed = True
+    while changed:
+        changed = False
+        for nonterm, productions in self.P.items():
+            if nonterm in reachable:
+                for prod in productions:
+                    for symbol in prod:
+                        if symbol in self.VN:
+                            if symbol not in reachable:
+                                reachable.add(symbol)
+                                changed = True
+    
+    # Remove symbols that are not reachable from the start symbol
+    inaccessible = self.VN - reachable
+    for nonterm in inaccessible:
+        del self.P[nonterm]
+        self.VN.remove(nonterm)
+```
+
+### convert_long_productions_to_cnf()
+&ensp;&ensp;&ensp; This function converts the productions of a context-free grammar into Chomsky normal form, which is a standard form for context-free grammars. It replaces any production with more than two non-terminal symbols with a set of new productions that have only two non-terminals or terminals on the right-hand side.
+
+```python
+def convert_long_productions_to_cnf(self):
+    # Convert long productions to Chomsky normal form
+    new_symbol_index = 0
+    for symbol in list(self.P):
+        productions = list(self.P[symbol])
+        for production in productions:
+            if len(production) > 2:
+                new_symbol = f'X{new_symbol_index}'
+                new_symbol_index += 1
+                self.P[new_symbol] = set()
+                self.P[new_symbol].add(production[0])
+                for i in range(1, len(production) - 1):
+                    intermediate_symbol = f'X{new_symbol_index}'
+                    new_symbol_index += 1
+                    self.P[intermediate_symbol] = set()
+                    self.P[intermediate_symbol].add(production[i])
+                    self.P[new_symbol].add(intermediate_symbol)
+                    self.VN.add(intermediate_symbol)
+                self.P[new_symbol].add(production[-1])
+                self.P[symbol].remove(production)
+                self.P[symbol].add(new_symbol)
+                self.VN.add(new_symbol)
+```
+
+### remove_epsilon_productions()
+&ensp;&ensp;&ensp; This function removes epsilon productions from a context-free grammar. It iterates over all non-terminals and their productions, and removes any production that consists only of the empty string (ε). It also keeps track of the removed productions in a list.
+
+```python
+def remove_epsilon_productions(self):
+    # Remove epsilon productions
+    epsilon_productions = []
+    for symbol in list(self.P):
+        productions = list(self.P[symbol])
+        for production in productions:
+            if production == 'ε':
+                epsilon_productions.append((symbol, production))
+                self.P[symbol].remove(production)
+```
 ## Results
-<img alt="token lists" src="screenshots/lab3_1.pn" />
+<img alt="token lists" src="screenshots/lab4.png" />
 
 ## Conclusions
 &ensp;&ensp;&ensp; After doing this laboratory work, i understand that normalizing a grammar is the process of converting it into a standard form or normal form, which can make it easier to analyze and manipulate the grammar. Chomsky Normal Form (CNF) is a specific normal form for context-free grammars, which involves converting each production rule to either have two nonterminal symbols or one terminal symbol. 
