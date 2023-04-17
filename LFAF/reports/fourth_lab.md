@@ -155,7 +155,7 @@ def remove_epsilon_productions(self):
                 self.P[symbol].remove(production)
 ```
 ## Results
-<img alt="token lists" src="screenshots/lab4.png" />
+<img alt="token lists" src="screenshots/lab4.pn" alt="screenshots/lab4" />
 
 ## Conclusions
 &ensp;&ensp;&ensp; After doing this laboratory work, i understand that normalizing a grammar is the process of converting it into a standard form or normal form, which can make it easier to analyze and manipulate the grammar. Chomsky Normal Form (CNF) is a specific normal form for context-free grammars, which involves converting each production rule to either have two nonterminal symbols or one terminal symbol. 
