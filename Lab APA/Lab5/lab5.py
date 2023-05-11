@@ -5,15 +5,24 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-def generate_random_graph(num_nodes, max_weight=10):
+def generate_dense_graph(num_nodes, max_weight=10):
     graph = {i: {} for i in range(num_nodes)}
     for i in range(num_nodes):
-        for j in range(i+1, num_nodes):
-            weight = random.randint(1, max_weight)
-            graph[i][j] = weight
-            graph[j][i] = weight
+        for j in range(num_nodes):
+            if i != j:
+                weight = random.randint(1, max_weight)
+                graph[i][j] = weight
     return graph
 
+def generate_sparse_graph(num_nodes, max_weight=10, probability=0.2):
+    graph = {i: {} for i in range(num_nodes)}
+    for i in range(num_nodes):
+        for j in range(i + 1, num_nodes):
+            if random.random() <= probability:  # Determine whether to add an edge
+                weight = random.randint(1, max_weight)
+                graph[i][j] = weight
+                graph[j][i] = weight
+    return graph
 
 def floyd_algorithm(graph):
     # Get the nodes in the graph and their number.
@@ -88,40 +97,79 @@ def draw_graph(graph):
     plt.show()
 
 
+# Declare Variables
 num_nodes = [5, 10, 15, 20, 30]
-dijkstra_t = []
-floyd_t = []
+dijkstra_t_dense = []
+floyd_t_dense = []
+dijkstra_t_sparse = []
+floyd_t_sparse = []
 
-#calculate the time for each iteration of each algorithm
+#calculate the time for each iteration of each algorithm for Dense graph
 for n in num_nodes:
-    graph = generate_random_graph(n)
+    graph = generate_dense_graph(n)
     start_time = time.time()
     dijkstra_algorithm(graph, 0)
-    dijkstra_t.append(time.time() - start_time)
+    dijkstra_t_dense.append(time.time() - start_time)
 
     start_time = time.time()
     floyd_algorithm(graph)
-    floyd_t.append(time.time() - start_time)
+    floyd_t_dense.append(time.time() - start_time)
 
-#Plot the time execution of 2 algorithms
-plt.plot(num_nodes, dijkstra_t, label="Dijkstra")
-plt.plot(num_nodes, floyd_t, label="Floyd")
+#calculate the time for each iteration of each algorithm for Sparse graph
+for n in num_nodes:
+    graph = generate_sparse_graph(n)
+    start_time = time.time()
+    dijkstra_algorithm(graph, 0)
+    dijkstra_t_sparse.append(time.time() - start_time)
+
+    start_time = time.time()
+    floyd_algorithm(graph)
+    floyd_t_sparse.append(time.time() - start_time)
+
+#Plot the time execution of 2 algorithms for Dense graph
+plt.plot(num_nodes, dijkstra_t_dense, label="Dijkstra")
+plt.plot(num_nodes, floyd_t_dense, label="Floyd")
 plt.xlabel("Nr of Nodes")
 plt.ylabel("Execution time")
 plt.legend()
 plt.title("Time Comparison")
 plt.show()
 
-# Random Complete graph
-ex_graph = generate_random_graph(7)
-draw_graph(ex_graph)
+#Plot the time execution of 2 algorithms for Sparse graph
+plt.plot(num_nodes, dijkstra_t_sparse, label="Dijkstra")
+plt.plot(num_nodes, floyd_t_sparse, label="Floyd")
+plt.xlabel("Nr of Nodes")
+plt.ylabel("Execution time")
+plt.legend()
+plt.title("Time Comparison")
+plt.show()
+
+dense_graph = generate_dense_graph(7)
+sparse_graph = generate_sparse_graph(15)
+
+draw_graph(dense_graph)
+draw_graph(sparse_graph)
 
 #Floyd's Algorithm Graph Tree
-floyd_tree = floyd_algorithm(ex_graph)
-draw_graph({node: {neighbor: ex_graph[node][neighbor] for neighbor in ex_graph[node]
-                        if floyd_tree[node][neighbor] == ex_graph[node][neighbor]} for node in ex_graph})
+floyd_tree = floyd_algorithm(dense_graph)
+draw_graph({node: {neighbor: dense_graph[node][neighbor] for neighbor in dense_graph[node]
+                        if floyd_tree[node][neighbor] == dense_graph[node][neighbor]} for node in dense_graph})
 
 #Dijkstra's Algorithm Graph Tree
-dijkstra_tree = dijkstra_algorithm(ex_graph, 0)
-draw_graph({node: {neighbor: ex_graph[node][neighbor] for neighbor in ex_graph[node]
-                        if dijkstra_tree[neighbor] == dijkstra_tree[node] + ex_graph[node][neighbor]} for node in ex_graph})
+dijkstra_tree = dijkstra_algorithm(dense_graph, 0)
+draw_graph({node: {neighbor: dense_graph[node][neighbor] for neighbor in dense_graph[node]
+                        if dijkstra_tree[neighbor] == dijkstra_tree[node] + dense_graph[node][neighbor]} for node in dense_graph})
+
+
+#--------------------------------------------------------------------------------------------------------------
+
+#Floyd's Algorithm Graph Tree
+floyd_tree = floyd_algorithm(sparse_graph)
+draw_graph({node: {neighbor: sparse_graph[node][neighbor] for neighbor in sparse_graph[node]
+                        if floyd_tree[node][neighbor] == sparse_graph[node][neighbor]} for node in sparse_graph})
+
+#Dijkstra's Algorithm Graph Tree
+dijkstra_tree = dijkstra_algorithm(sparse_graph, 0)
+draw_graph({node: {neighbor: sparse_graph[node][neighbor] for neighbor in sparse_graph[node]
+                        if dijkstra_tree[neighbor] == dijkstra_tree[node] + sparse_graph[node][neighbor]} for node in sparse_graph})
+
